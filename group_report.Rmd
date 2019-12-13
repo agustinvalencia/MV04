@@ -198,21 +198,44 @@ It is seen that $test_i > 12.59159$. Thus $H_0$ is rejected.
 
 
 
-a) Test at the 5% level if there is any association between the groups of variables.
+a) **Test at the 5% level if there is any association between the groups of variables.**
+
+$$H_0: \Sigma_{12} = 0$$ 
+$$H1: \Sigma{12} \neq 0$$
+ We have $p \cdot q = 3 * 2 = 6$ degrees of freedom. For $n = 46$, we use Bartletts approximation and our test statistic is: (fancy formula latechhh here).
 
 
-b) How many pairs of canonical variates are significant?
+b) **How many pairs of canonical variates are significant?**
 
-c) Interpret the "significant" squared canonical correlations.
-Tip: Read section "Canonical Correlations as Generalizations of Other Correlation Coefficients".
+$$H_0: \rho_2 \neq 0$$ and  $$H_1: \rho_2 = 0$$
+At $\alpha = 0.05$ significance, we get a test statistic of 0.66, smaller than the critical value of 12.59. We then reject $H_0$, meaning only the first canonical correlation ($\rho_1$) is significantly different from 0.
 
-d) Interpret the canonical variates by using the coefficients and suitable correlations.
 
-e) Are the "significant" canonical variates good summary measures of the respective data sets?
-Tip: Read section "Proportions of Explained Sample Variance".
 
-f) Give your opinion on the success of this canonical correlation analysis.
+c) **Interpret the "significant" squared canonical correlations.
+Tip: Read section "Canonical Correlations as Generalizations of Other Correlation Coefficients".**
 
+The significant squared canonical correlation ($\rho_1^2$) measures the overlap between $X^{(1)}$ and $X^{(2)}$, the different group of variables.
+
+
+d) **Interpret the canonical variates by using the coefficients and suitable correlations.**
+
+The canonical correlations variables are:
+$$U_1  = 0.0131007 X_1^{(1)} - 0.0144383 X_2^{(1)} + 0.0233997 X_3^{(1)}$$
+$$V_1 = -8.0655751 X_1^{(2)} + 0.0191591 X_2^{(2)}$$
+
+We can interpret $U_1$ as a measure of how well a patient can process sugar (glucose) in their bloodstream. $V_1$, on the other hand, can be interpreted as how prone the patient is to diabetes.
+
+
+e) **Are the "significant" canonical variates good summary measures of the respective data sets?
+Tip: Read section "Proportions of Explained Sample Variance".**
+
+The significant canonical variate is _not_ a good summary of the dataset, because it only captures approximately 10% of the total sample variance.
+
+
+f) **Give your opinion on the success of this canonical correlation analysis.**
+
+While the canonical correlation variables have insightful interpretration, the analysis is not good enough given the small summary capability of its variates.
 
 
 

@@ -3,6 +3,7 @@ library(knitr)
 library(CCP)
 
 data <- read.table("./Data/P10-16.DAT")
+data <- cov2cor(as.matrix(data))
 
 #number of observations (patients)
 n <- 46
