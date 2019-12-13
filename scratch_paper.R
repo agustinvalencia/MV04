@@ -18,16 +18,15 @@ sigma21 <- as.matrix(data[4:5, 1:3])
 sigma12 <- as.matrix(data[1:3, 4:5])
 
 
-A <- solve(sqrtm(sigma11)) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% solve(sqrtm(sigma11))
-
-B <- solve(sqrtm(sigma22)) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% solve(sqrtm(sigma22))
+A <- sqrtm(solve(sigma11)) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% sqrtm(solve(sigma11))
+B <- sqrtm(solve(sigma22)) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% sqrtm(solve(sigma22))
 
 e <- eigen(A)$vectors[,1:2]
 f <- eigen(B)$vectors
 
-a <- t(e) %*% solve(sqrtm(sigma11)) 
+a <- t(e) %*% sqrtm(solve(sigma11))
 a <- t(a)
-b <- t(f) %*% solve(sqrtm(sigma22))
+b <- t(f) %*% sqrtm(solve(sigma22))
 b <- t(b)
 a
 b
@@ -37,8 +36,6 @@ ro1 <- sqrt(eigen(A)$values)
 ro1[3] <- 0
 
 ro2 <- sqrt(eigen(B)$values)
-
-
 
 
 #Hypothesis testing
