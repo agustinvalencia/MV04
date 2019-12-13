@@ -230,6 +230,16 @@ We can interpret $U_1$ as a measure of how well a patient can process sugar (glu
 e) **Are the "significant" canonical variates good summary measures of the respective data sets?
 Tip: Read section "Proportions of Explained Sample Variance".**
 
+```{r}
+num <- t(a[,1]) %*% sigma12 %*% b[1,]
+den <- sqrt(t(a[,1]) %*% sigma11 %*% a[,1]) * sqrt(t(b[,1]) %*% sigma22 %*% b[,1])
+r <- num/den
+```
+
+The correlation variate explains 44% of the total sample variance. We conclude therefore that the significant canonical variates are not a good summary because there might be nonlinear relations.
+
+
+
 The significant canonical variate is _not_ a good summary of the dataset, because it only captures approximately 10% of the total sample variance.
 
 
