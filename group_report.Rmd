@@ -6,11 +6,18 @@ author: |
   | Bayu Brahmantio  - **baybr878**
   | Joris van Doorn - **jorva845**
   | Marcos F Mourao - **marfr825**
-output: pdf_document
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
+RNGversion('3.5.1')
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+data <- read.table("./Data/P10-16.DAT")
 ```
 
 # Canonical correlation analysis by utilizing suit able software
@@ -30,3 +37,8 @@ e) Are the "significant" canonical variates good summary measures of the respect
 Tip: Read section "Proportions of Explained Sample Variance".
 
 f) Give your opinion on the success of this canonical correlation analysis.
+
+# Appendix
+
+```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE,results='show'}
+```
