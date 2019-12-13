@@ -50,8 +50,8 @@ sigma22 <- as.matrix(data[4:5, 4:5])
 sigma21 <- as.matrix(data[4:5, 1:3])
 sigma12 <- as.matrix(data[1:3, 4:5])
 
-e <- sqrtm(sigma11) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% sqrtm(sigma11)
-f <- sqrtm(sigma22) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% sqrtm(sigma22)
+A <- sqrtm(sigma11) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% sqrtm(sigma11)
+B <- sqrtm(sigma22) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% sqrtm(sigma22)
 
 ```
 
@@ -77,54 +77,82 @@ kable(sigma12)
 
 It can be computed that
 
-$$S_{11}^{-1/2}S_{12}S_{22}^{-1}S_{21}S_{11}^{-1/2} = $$
+$$A = S_{11}^{-1/2}S_{12}S_{22}^{-1}S_{21}S_{11}^{-1/2} = $$
 ```{r, echo=FALSE}
-kable(e)
+kable(A)
 ```
 
 Its eigen-decomposition is given by
 
 ```{r, echo=FALSE}
-eEigenDecom <- eigen(e)
-eEigVect <- eEigenDecom$vectors
-eEigVals <- eEigenDecom$values
+aEigenDecom <- eigen(A)
+aEigVect <- aEigenDecom$vectors
+aEigVals <- aEigenDecom$values
 ```
 
-Eigenvalues :
+Eigenvalues $\overrightarrow{\alpha}$:
 ```{r, echo=FALSE}
-kable(eEigVals)
+kable(aEigVals)
 ```
 
-Eigenvectors:
+Eigenvectors $\mathbf{\overrightarrow{a}}$:
 ```{r, echo=FALSE}
-kable(eEigVect)
+kable(aEigVect)
 ```
 
 Also, 
 
-$$S_{22}^{-1/2}S_{21}S_{11}^{-1}S_{12}S_{22}^{-1/2} = $$
+$$B = S_{22}^{-1/2}S_{21}S_{11}^{-1}S_{12}S_{22}^{-1/2} = $$
 
 ```{r, echo=FALSE}
-kable(f)
+kable(B)
 ```
 
 Its eigen-decomposition is given by
 
 ```{r, echo=FALSE}
-fEigenDecom <- eigen(f)
-fEigVect <- fEigenDecom$vectors
-fEigVals <- fEigenDecom$values
+bEigenDecom <- eigen(B)
+bEigVect <- bEigenDecom$vectors
+bEigVals <- bEigenDecom$values
 ```
 
-Eigenvalues :
+Eigenvalues $\overrightarrow{\beta}$:
 ```{r, echo=FALSE}
-kable(fEigVals)
+kable(bEigVals)
 ```
 
-Eigenvectors:
+Eigenvectors $\mathbf{\overrightarrow{b}}$:
 ```{r, echo=FALSE}
-kable(fEigVect)
+kable(bEigVect)
 ```
+
+$$\rho_1 = \sqrt{\overrightarrow{\alpha}}$$
+```{r}
+ro1 <- sqrt(aEigVals)
+kable(ro1)
+```
+
+$$\rho_2 = \sqrt{\overrightarrow{\beta}}$$
+```{r}
+ro2 <- sqrt(bEigVals)
+kable(ro2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 a) Test at the 5% level if there is any association between the groups of variables.
 
