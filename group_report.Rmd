@@ -6,7 +6,6 @@ author: |
   | Bayu Brahmantio  - **baybr878**
   | Joris van Doorn - **jorva845**
   | Marcos F Mourao - **marfr825**
-date: "12/13/2019"
 output: pdf_document
 ---
 
@@ -14,3 +13,20 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Canonical correlation analysis by utilizing suit able software
+
+Look at the data described in Exercise 10.16 of Johnson, Wichern. You may find it in the file P10-16.DAT. The data for 46 patients are summarized in a covariance matrix, which will be analyzed in R. Read through the description of the different R packages and functions so you may chose the must suitable one for the analysis. Supplement with own code where necessary.
+
+a) Test at the 5% level if there is any association between the groups of variables.
+
+b) How many pairs of canonical variates are significant?
+
+c) Interpret the "significant" squared canonical correlations.
+Tip: Read section "Canonical Correlations as Generalizations of Other Correlation Coefficients".
+
+d) Interpret the canonical variates by using the coefficients and suitable correlations.
+
+e) Are the "significant" canonical variates good summary measures of the respective data sets?
+Tip: Read section "Proportions of Explained Sample Variance".
+
+f) Give your opinion on the success of this canonical correlation analysis.
