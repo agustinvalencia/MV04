@@ -16,6 +16,7 @@ RNGversion('3.5.1')
 knitr::opts_chunk$set(echo = TRUE)
 library(expm)
 library(knitr)
+library(CCP)
 ```
 
 ```{r, echo=FALSE}
@@ -50,8 +51,8 @@ sigma22 <- as.matrix(data[4:5, 4:5])
 sigma21 <- as.matrix(data[4:5, 1:3])
 sigma12 <- as.matrix(data[1:3, 4:5])
 
-A <- sqrtm(sigma11) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% sqrtm(sigma11)
-B <- sqrtm(sigma22) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% sqrtm(sigma22)
+A <- solve(sqrtm(sigma11)) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% solve(sqrtm(sigma11))
+B <- solve(sqrtm(sigma22)) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% solve(sqrtm(sigma22))
 
 ```
 
@@ -93,6 +94,7 @@ aEigVals <- aEigenDecom$values
 Eigenvalues $\overrightarrow{\alpha}$:
 ```{r, echo=FALSE}
 kable(aEigVals)
+aEigVals <- aEigVals[1:2]
 ```
 
 Eigenvectors $\mathbf{\overrightarrow{a}}$:
@@ -126,16 +128,17 @@ Eigenvectors $\mathbf{\overrightarrow{b}}$:
 kable(bEigVect)
 ```
 
+Then the canonical correlations are
 $$\rho_1 = \sqrt{\overrightarrow{\alpha}}$$
-```{r}
-ro1 <- sqrt(aEigVals)
-kable(ro1)
+```{r, echo=FALSE}
+rho1 <- sqrt(aEigVals)
+kable(rho1)
 ```
 
 $$\rho_2 = \sqrt{\overrightarrow{\beta}}$$
-```{r}
-ro2 <- sqrt(bEigVals)
-kable(ro2)
+```{r, echo=FALSE}
+rho2 <- sqrt(bEigVals)
+kable(rho2)
 ```
 
 
