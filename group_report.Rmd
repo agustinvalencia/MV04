@@ -26,7 +26,6 @@ data <- read.table("./Data/P10-16.DAT")
 
 Look at the data described in Exercise 10.16 of Johnson, Wichern. You may find it in the file P10-16.DAT. The data for 46 patients are summarized in a covariance matrix, which will be analyzed in R. Read through the description of the different R packages and functions so you may chose the must suitable one for the analysis. Supplement with own code where necessary.
 
-<<<<<<< HEAD
 ```{r}
 #number of observations (patients)
 n <- 46
