@@ -112,7 +112,4 @@ f) Give your opinion on the success of this canonical correlation analysis.
 # Appendix A - Code
 
 ```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
-# Appendix
-
-```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
 ```
