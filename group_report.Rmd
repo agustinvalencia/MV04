@@ -11,9 +11,10 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 RNGversion('3.5.1')
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
 ```
 
 ```{r, echo=FALSE}
@@ -24,7 +25,15 @@ data <- read.table("./Data/P10-16.DAT")
 
 Look at the data described in Exercise 10.16 of Johnson, Wichern. You may find it in the file P10-16.DAT. The data for 46 patients are summarized in a covariance matrix, which will be analyzed in R. Read through the description of the different R packages and functions so you may chose the must suitable one for the analysis. Supplement with own code where necessary.
 
-```{r}
+The given matrix is the following: 
+
+```{r, echo=FALSE}
+kable(data)
+```
+
+Thus, separating the variance-covariance matrix it is obtained that
+
+```{r, results=FALSE, echo=FALSE}
 #separating the variance-covariance matrix
 sigma11 <- data[1:3,1:3]
 sigma22 <- data[4:5, 4:5]
@@ -32,6 +41,25 @@ sigma21 <- data[4:5, 1:3]
 sigma12 <- data[1:3, 4:5]
 ```
 
+$$\Sigma_{11} =$$
+```{r, echo=FALSE}
+kable(sigma11)
+```
+
+$$\Sigma_{22} =$$
+```{r, echo=FALSE}
+kable(sigma22)
+```
+
+$$\Sigma_{21} =$$
+```{r, echo=FALSE}
+kable(sigma21)
+```
+
+$$\Sigma_{12} =$$
+```{r, echo=FALSE}
+kable(sigma12)
+```
 
 a) Test at the 5% level if there is any association between the groups of variables.
 
@@ -53,7 +81,7 @@ f) Give your opinion on the success of this canonical correlation analysis.
 
 
 
-
+\newpage
 # Appendix A - Code
 
 ```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
