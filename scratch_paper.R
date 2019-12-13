@@ -31,7 +31,6 @@ b <- t(b)
 a
 b
 
-
 ro1 <- sqrt(eigen(A)$values) 
 ro1[3] <- 0
 

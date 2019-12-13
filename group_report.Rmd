@@ -87,17 +87,16 @@ Its eigen-decomposition is given by
 
 ```{r, echo=FALSE}
 mEigenDecom <- eigen(M)
-mEigVect <- mEigenDecom$vectors
-mEigVals <- mEigenDecom$values
+mEigVect <- mEigenDecom$vectors[,1:2]
+mEigVals <- mEigenDecom$values[1:2]
 ```
 
-Eigenvalues $\overrightarrow{\alpha}$:
+The first two eigenvalues $\overrightarrow{\alpha}$:
 ```{r, echo=FALSE}
 kable(mEigVals)
-mEigVals <- mEigVals[1:2]
 ```
 
-Eigenvectors $\mathbf{\overrightarrow{e}}$:
+The first two eigenvectors $\mathbf{\overrightarrow{e}}$:
 ```{r, echo=FALSE}
 kable(mEigVect)
 ```
@@ -153,21 +152,14 @@ kable(b)
 ```
 
 
-Then, the canonical correlations are
+$M$ and $D$ have the same eigenvalues, so the canonical correlations can be calculated from one of 
 
-$$\rho_1 = \sqrt{\overrightarrow{\alpha}}$$
+$$[\hat{\rho_1^*}, \hat{\rho_2^*} ]=$$
 ```{r, echo=FALSE}
 rho1 <- sqrt(mEigVals)
-kable(rho1)
-```
-
-$$\rho_2 = \sqrt{\overrightarrow{\beta}}$$
-```{r, echo=FALSE}
 rho2 <- sqrt(dEigVals)
-kable(rho2)
+kable(t(rho1))
 ```
-
-
 
 For Hypothesis testing, using $\alpha=0.05, p=3, q=2$ we have that, the obtained critical value is given by
 
@@ -186,13 +178,13 @@ alpha <- 0.05
 crit <- qchisq(p = (1-alpha), df = p*q)
 #test statistic
 test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-rho1^2))  #13.74948
-test2 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-rho2^2))  #13.74948 they are the same
+test2 <- -(n-1-(0.5*(p+q+1))) * log(1-rho1[2]^2)  #13.74948 they are the same
 ```
 
 For the obtained canonical correlations it is obtained that
 
 $$test_1 = 13.74948$$
-$$test_2 = 13.74948$$
+$$test_2 = 0.6668632$$
 
 It is seen that $test_i > 12.59159$. Thus $H_0$ is rejected.
 
