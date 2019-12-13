@@ -1,0 +1,16 @@
+---
+title: "Assignment 4 - Canonical Correlation Analysis"
+author: |
+  | **GROUP 03**
+  | Agustin Valencia - **aguva779**
+  | Bayu Brahmantio  - **baybr878**
+  | Joris van Doorn - **jorva845**
+  | Marcos F Mourao - **marfr825**
+date: "12/13/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
