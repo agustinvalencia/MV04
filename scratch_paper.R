@@ -1,5 +1,6 @@
 library(expm)
 library(knitr)
+library(CCP)
 
 data <- read.table("./Data/P10-16.DAT")
 
@@ -16,20 +17,28 @@ sigma22 <- as.matrix(data[4:5, 4:5])
 sigma21 <- as.matrix(data[4:5, 1:3])
 sigma12 <- as.matrix(data[1:3, 4:5])
 
-#get correlation
-R11 <- cor(sigma11)
-R22 <- cor(sigma22)
-R12 <- cor(sigma12)
-R21 <- cor(sigma21)
+
+A <- solve(sqrtm(sigma11)) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% solve(sqrtm(sigma11))
+
+B <- solve(sqrtm(sigma22)) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% solve(sqrtm(sigma22))
+
+e <- eigen(A)$vectors[,1:2]
+f <- eigen(B)$vectors
+
+a <- t(e) %*% solve(sqrtm(sigma11)) 
+a <- t(a)
+b <- t(f) %*% solve(sqrtm(sigma22))
+b <- t(b)
+a
+b
 
 
-e <- sqrtm(sigma11) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% sqrtm(sigma11)
+ro1 <- sqrt(eigen(A)$values) 
+ro1[3] <- 0
 
-f <- sqrtm(sigma22) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% sqrtm(sigma22)
+ro2 <- sqrt(eigen(B)$values)
 
 
-ro1 <- sqrt(eigen(e)$values)
-ro2 <- sqrt(eigen(f)$values)
 
 
 #Hypothesis testing
@@ -37,4 +46,8 @@ alpha <- 0.05
 #critical value
 crit <- qchisq(p = (1-alpha), df = p*q)
 #test statistic
-test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-(ro1)^2))
+test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-ro1^2))  #13.74948
+test2 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-ro2^2))  #13.74948 they are the same
+
+#test1 > critical value >>>>> We reject H0
+
