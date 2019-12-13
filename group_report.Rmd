@@ -51,8 +51,8 @@ sigma22 <- as.matrix(data[4:5, 4:5])
 sigma21 <- as.matrix(data[4:5, 1:3])
 sigma12 <- as.matrix(data[1:3, 4:5])
 
-A <- solve(sqrtm(sigma11)) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% solve(sqrtm(sigma11))
-B <- solve(sqrtm(sigma22)) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% solve(sqrtm(sigma22))
+M <- sqrtm(solve(sigma11)) %*% sigma12 %*% solve(sigma22) %*% sigma21 %*% sqrtm(solve(sigma11))
+D <- sqrtm(solve(sigma22)) %*% sigma21 %*% solve(sigma11) %*% sigma12 %*% sqrtm(solve(sigma22))
 
 ```
 
@@ -78,89 +78,123 @@ kable(sigma12)
 
 It can be computed that
 
-$$A = S_{11}^{-1/2}S_{12}S_{22}^{-1}S_{21}S_{11}^{-1/2} = $$
+$$M = S_{11}^{-1/2}S_{12}S_{22}^{-1}S_{21}S_{11}^{-1/2} = $$
 ```{r, echo=FALSE}
-kable(A)
+kable(M)
 ```
 
 Its eigen-decomposition is given by
 
 ```{r, echo=FALSE}
-aEigenDecom <- eigen(A)
-aEigVect <- aEigenDecom$vectors
-aEigVals <- aEigenDecom$values
+mEigenDecom <- eigen(M)
+mEigVect <- mEigenDecom$vectors
+mEigVals <- mEigenDecom$values
 ```
 
 Eigenvalues $\overrightarrow{\alpha}$:
 ```{r, echo=FALSE}
-kable(aEigVals)
-aEigVals <- aEigVals[1:2]
+kable(mEigVals)
+mEigVals <- mEigVals[1:2]
 ```
 
-Eigenvectors $\mathbf{\overrightarrow{a}}$:
+Eigenvectors $\mathbf{\overrightarrow{e}}$:
 ```{r, echo=FALSE}
-kable(aEigVect)
+kable(mEigVect)
 ```
 
 Also, 
 
-$$B = S_{22}^{-1/2}S_{21}S_{11}^{-1}S_{12}S_{22}^{-1/2} = $$
+$$D = S_{22}^{-1/2}S_{21}S_{11}^{-1}S_{12}S_{22}^{-1/2} = $$
 
 ```{r, echo=FALSE}
-kable(B)
+kable(D)
 ```
 
 Its eigen-decomposition is given by
 
 ```{r, echo=FALSE}
-bEigenDecom <- eigen(B)
-bEigVect <- bEigenDecom$vectors
-bEigVals <- bEigenDecom$values
+dEigenDecom <- eigen(D)
+dEigVect <- dEigenDecom$vectors
+dEigVals <- dEigenDecom$values
 ```
 
 Eigenvalues $\overrightarrow{\beta}$:
 ```{r, echo=FALSE}
-kable(bEigVals)
+kable(dEigVals)
 ```
 
-Eigenvectors $\mathbf{\overrightarrow{b}}$:
+Eigenvectors $\mathbf{\overrightarrow{f}}$:
 ```{r, echo=FALSE}
-kable(bEigVect)
+kable(dEigVect)
 ```
 
-Then the canonical correlations are
+It is defined that
+
+$$\mathbf{\hat{a}'}_k = \mathbf{\hat{e}'}_k S_{11}^{-1/2}$$
+$$\mathbf{\hat{b}'}_k = \mathbf{\hat{f}'}_k S_{22}^{-1/2}$$
+Thus, based in results above: 
+
+```{r, echo=FALSE}
+a <- t(mEigVect) %*% sqrtm(solve(sigma11))
+a <- t(a)
+b <- t(dEigVect) %*% sqrtm(solve(sigma22))
+b <- t(b)
+```
+
+$$\mathbf{\hat{a}} = $$
+
+```{r, echo=FALSE}
+kable(a)
+```
+
+$$\mathbf{\hat{b}} = $$
+```{r, echo=FALSE}
+kable(b)
+```
+
+
+Then, the canonical correlations are
+
 $$\rho_1 = \sqrt{\overrightarrow{\alpha}}$$
 ```{r, echo=FALSE}
-rho1 <- sqrt(aEigVals)
+rho1 <- sqrt(mEigVals)
 kable(rho1)
 ```
 
 $$\rho_2 = \sqrt{\overrightarrow{\beta}}$$
 ```{r, echo=FALSE}
-rho2 <- sqrt(bEigVals)
+rho2 <- sqrt(dEigVals)
 kable(rho2)
 ```
 
-For Hypothesis testing we have that
+
+
+For Hypothesis testing, using $\alpha=0.05, p=3, q=2$ we have that, the obtained critical value is given by
+
+$$\chi_{(1-\alpha, pq)} = 12.59159$$
 
 $$H_0 : \Sigma_{12} = 0 $$
 
-
-
-
-
-
 The test statistic:
-$$ -\left( n - 1 - \frac{1}{2}(p+q+1)\right) \ln \prod_{i=1}^2{(1-\hat{\rho^{*2}})} $$
+$$ -\left( n - 1 - \frac{1}{2}(p+q+1)\right) \ln \prod_{i=1}^2{(1-\hat{\rho_i^{*2}})} $$
 
 ```{r, echo=FALSE}
-test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-ro1^2))
+test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-rho1^2))
+#Hypothesis testing
+alpha <- 0.05
+#critical value
+crit <- qchisq(p = (1-alpha), df = p*q)
+#test statistic
+test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-rho1^2))  #13.74948
+test2 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-rho2^2))  #13.74948 they are the same
 ```
 
+For the obtained canonical correlations it is obtained that
 
+$$test_1 = 13.74948$$
+$$test_2 = 13.74948$$
 
-
-
+It is seen that $test_i > 12.59159$. Thus $H_0$ is rejected.
 
 
 
@@ -173,14 +207,6 @@ test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-ro1^2))
 
 
 a) Test at the 5% level if there is any association between the groups of variables.
-
-```{r}
-alpha <- 0.05
-#critical value
-crit <- qchisq(p = (1-alpha), df = p*q)
-#test statistic
-
-```
 
 
 b) How many pairs of canonical variates are significant?
