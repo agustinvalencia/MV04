@@ -141,6 +141,21 @@ rho2 <- sqrt(bEigVals)
 kable(rho2)
 ```
 
+For Hypothesis testing we have that
+
+$$H_0 : \Sigma_{12} = 0 $$
+
+
+
+
+
+
+The test statistic:
+$$ -\left( n - 1 - \frac{1}{2}(p+q+1)\right) \ln \prod_{i=1}^2{(1-\hat{\rho^{*2}})} $$
+
+```{r, echo=FALSE}
+test1 <- -(n-1-(0.5*(p+q+1))) * log(prod(1-ro1^2))
+```
 
 
 
