@@ -161,13 +161,14 @@ rho2 <- sqrt(dEigVals)
 kable(t(rho1))
 ```
 
-For Hypothesis testing, using $\alpha=0.05, p=3, q=2$ we have that, the obtained critical value is given by
 
-$$\chi_{(1-\alpha, pq)} = 12.59159$$
 
-$$H_0 : \Sigma_{12} = 0 $$
+a) **Test at the 5% level if there is any association between the groups of variables.**
 
-The test statistic:
+$$H_0: \Sigma_{12} = 0$$ 
+$$H1: \Sigma{12} \neq 0$$
+ We have $p \cdot q = 3 * 2 = 6$ degrees of freedom. For $n = 46$, we use Bartletts approximation and our test statistic is: 
+
 $$ -\left( n - 1 - \frac{1}{2}(p+q+1)\right) \ln \prod_{i=1}^2{(1-\hat{\rho_i^{*2}})} $$
 
 ```{r, echo=FALSE}
@@ -186,23 +187,12 @@ For the obtained canonical correlations it is obtained that
 $$test_1 = 13.74948$$
 $$test_2 = 0.6668632$$
 
-It is seen that $test_i > 12.59159$. Thus $H_0$ is rejected.
+It is seen that $test_1 > 12.59159$, thus according to $test_1$ $H_0$ should be rejected. Now, $test_2 < 12.59159$, then according to $test_2$ we fail to reject $H_0$.
+
+In summary we conclude that we cannot assume that $$H_0: \Sigma_{12} = 0$$ at a significance level $\alpha=0.05$
 
 
 
-
-
-
-
-
-
-
-
-a) **Test at the 5% level if there is any association between the groups of variables.**
-
-$$H_0: \Sigma_{12} = 0$$ 
-$$H1: \Sigma{12} \neq 0$$
- We have $p \cdot q = 3 * 2 = 6$ degrees of freedom. For $n = 46$, we use Bartletts approximation and our test statistic is: (fancy formula latechhh here).
 
 
 b) **How many pairs of canonical variates are significant?**
@@ -230,17 +220,15 @@ We can interpret $U_1$ as a measure of how well a patient can process sugar (glu
 e) **Are the "significant" canonical variates good summary measures of the respective data sets?
 Tip: Read section "Proportions of Explained Sample Variance".**
 
-```{r}
+```{r, echo=FALSE}
 num <- t(a[,1]) %*% sigma12 %*% b[1,]
 den <- sqrt(t(a[,1]) %*% sigma11 %*% a[,1]) * sqrt(t(b[,1]) %*% sigma22 %*% b[,1])
 r <- num/den
+print("The explained variance")
+r
 ```
 
 The correlation variate explains 44% of the total sample variance. We conclude therefore that the significant canonical variates are not a good summary because there might be nonlinear relations.
-
-
-
-The significant canonical variate is _not_ a good summary of the dataset, because it only captures approximately 10% of the total sample variance.
 
 
 f) **Give your opinion on the success of this canonical correlation analysis.**
